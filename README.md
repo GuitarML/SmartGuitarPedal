@@ -1,6 +1,6 @@
 # SmartGuitarPedal
 
-Guitar plugin that uses neural network models to emulate real world hardware.
+Guitar plugin made with JUCE that uses neural network models to emulate real world hardware.
 
 This plugin uses a WaveNet model to recreate the sound of real world hardware, such as
 a TS9 Tubescreamer or Blues Jr amp. Drive, Level, and Tone were added for simple ways to
