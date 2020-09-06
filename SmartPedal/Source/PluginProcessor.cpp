@@ -180,8 +180,8 @@ void SmartPedalAudioProcessor::setStateInformation (const void* data, int sizeIn
     // whose contents will have been created by the getStateInformation() call.
 }
 
-void SmartPedalAudioProcessor::addDirectory(File file)
-//void SmartPedalAudioProcessor::addDirectory(const File& file)
+//void SmartPedalAudioProcessor::addDirectory(File file)
+void SmartPedalAudioProcessor::addDirectory(const File& file)
 {
     if (file.isDirectory())
     {

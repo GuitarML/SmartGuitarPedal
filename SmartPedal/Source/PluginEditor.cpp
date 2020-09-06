@@ -19,7 +19,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     // editor's size to whatever you need it to
 
     // Overall Widgets
-    addAndMakeVisible(loadButton);
+    //addAndMakeVisible(loadButton);
     loadButton.setButtonText("Set Model Directory");
     loadButton.addListener(this);
 
@@ -40,7 +40,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
 
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
-    int c = 0;
+    int c = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
         modelSelect.addItem(jsonFile.getFileName(), c);
         c += 1;
