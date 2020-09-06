@@ -25,8 +25,9 @@ Model training is done using PyTorch on pre recorded .wav samples. More info in 
 6. Open and build project in Visual Studio (Windows), Xcode (Mac), or Code::Blocks/Makefile (Linux)
 
 ### Loading hardware models
-When running the plugin, load the directory containing the .json model files using the "Set Model Directory" button,
-and select a model from the combobox.
+Models are auto loaded from the working directory of the executable. When using the plugin, add the .json files to your DAW
+.exe path (for example: C:\Program Files\REAPER (x64)). When running the stand alone exe, put in the same directory as
+SmartPedal.exe. 
 
 
 This project builds off the the work done here:
