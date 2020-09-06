@@ -6,8 +6,7 @@ This plugin uses a WaveNet model to recreate the sound of real world hardware, s
 a TS9 Tubescreamer or Blues Jr amp. Drive, Level, and Tone were added for simple ways to
 control the sound. The WaveNet model is effective at emulating distortion style effects or tube amplifiers.
 
-[My image]
-(keyth72.github.com/SmartGuitarPedal/resources/app_pic.png)
+![app] (https://github.com/keyth72/SmartGuitarPedal/blob/master/resources/app_pic.png)
 
 You can create your own models and load them in SmartGuitarPedal using the following Github repository:
 
