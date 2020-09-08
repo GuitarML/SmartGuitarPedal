@@ -16,6 +16,10 @@ Model training is done using PyTorch on pre recorded .wav samples. More info in 
 Feel free to create a pull request to add your own trained models to this repository.
 
 
+Also see companion plugin, the SmartGuitarAmp:
+https://github.com/keyth72/SmartGuitarAmp
+
+
 ## Initial Setup
 
 1. Clone or download this repository.
