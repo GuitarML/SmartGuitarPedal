@@ -30,6 +30,8 @@ https://github.com/keyth72/SmartGuitarAmp
 5. Add the <full_path_to>/ Eigen folder to "Header Search Paths" in Exporters -> Debug/Release
 6. Open and build project in Visual Studio (Windows), Xcode (Mac), or Code::Blocks/Makefile (Linux)
 
+Note: Make sure to build in Release mode unless actually debugging. Debug mode will not keep up with real time playing.
+
 ### Loading hardware models
 Models are auto loaded from the working directory of the executable. When using the plugin, add the .json files to your DAW
 .exe path (for example: "C:\Program Files\REAPER (x64)"). When running the stand alone exe, put in the same directory as
