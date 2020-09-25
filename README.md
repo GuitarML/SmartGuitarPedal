@@ -10,7 +10,7 @@ control the sound. The WaveNet model is effective at emulating distortion style 
 
 You can create your own models and load them in SmartGuitarPedal using the following Github repository:
 
-https://github.com/keyth72/pedalnet
+https://github.com/keyth72/PedalNetRT
 
 Model training is done using PyTorch on pre recorded .wav samples. More info in the above repository.
 Feel free to create a pull request to add your own trained models to this repository.
