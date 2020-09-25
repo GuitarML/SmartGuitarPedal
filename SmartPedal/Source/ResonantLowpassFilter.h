@@ -23,9 +23,9 @@ public:
 private:
     // Tone Knob related variables
     float sampleRate = 44100; //TODO set from var
-    float toneFrequency = 9600;
+    float toneFrequency = 10500;
     float cut_lp = toneFrequency * 2 / sampleRate; 
-    float res_lp = 0.7; // Resonance strength (range 0 to 1)
+    float res_lp = 0.5; // Resonance strength (range 0 to 1)
     float fb_lp = res_lp / (1 - cut_lp);
     float n3 = 0.0; 
     float n4 = 0.0;

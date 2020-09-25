@@ -19,19 +19,6 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     // editor's size to whatever you need it to
 
     // Overall Widgets
-    //addAndMakeVisible(loadButton);
-    loadButton.setButtonText("Set Model Directory");
-    loadButton.addListener(this);
-
-    //addAndMakeVisible(levelInLabel);
-    levelInLabel.setText("Level In", juce::NotificationType::dontSendNotification);
-    levelInLabel.setJustificationType(juce::Justification::centred);
-    levelInLabel.setColour(juce::Label::textColourId, juce::Colours::black);
-
-    //addAndMakeVisible(levelOutLabel);
-    levelOutLabel.setText("Level Out", juce::NotificationType::dontSendNotification);
-    levelOutLabel.setJustificationType(juce::Justification::centred);
-    levelOutLabel.setColour(juce::Label::textColourId, juce::Colours::black);
 
     addAndMakeVisible(modelLabel);
     modelLabel.setText("Model", juce::NotificationType::dontSendNotification);
@@ -47,32 +34,10 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
 
-    auto font = levelInLabel.getFont();
+    auto font = modelLabel.getFont();
     float height = font.getHeight();
     font.setHeight(height);
-    levelInLabel.setFont(font);
-    levelOutLabel.setFont(font);
     modelLabel.setFont(font);
-
-    //addAndMakeVisible(levelInKnob);
-    levelInKnob.addListener(this);
-    levelInKnob.setRange(-24.0, 24.0);
-    levelInKnob.setValue(0.0);
-    levelInKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    levelInKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 75, 20);
-    levelInKnob.setTextBoxIsEditable(false);
-    levelInKnob.setNumDecimalPlacesToDisplay(1);
-    levelInKnob.setDoubleClickReturnValue(true, 0.0);
-
-    //addAndMakeVisible(levelOutKnob);
-    levelOutKnob.addListener(this);
-    levelOutKnob.setRange(-24.0, 24.0);
-    levelOutKnob.setValue(0.0);
-    levelOutKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    levelOutKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 75, 20);
-    levelOutKnob.setTextBoxIsEditable(false);
-    levelOutKnob.setNumDecimalPlacesToDisplay(1);
-    levelOutKnob.setDoubleClickReturnValue(true, 0.0);
 
     // Set Widget Graphics
     blackHexKnobLAF.setLookAndFeel(ImageCache::getFromMemory(BinaryData::knob_hex_png, BinaryData::knob_hex_pngSize));
@@ -98,8 +63,8 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     addAndMakeVisible(odDriveKnob);
     odDriveKnob.setLookAndFeel(&blackHexKnobLAF);
     odDriveKnob.addListener(this);
-    odDriveKnob.setRange(-24.0, 24.0);
-    odDriveKnob.setValue(0.0);
+    odDriveKnob.setRange(-23.0, 25.0);
+    odDriveKnob.setValue(1.0);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setNumDecimalPlacesToDisplay(1);
@@ -109,7 +74,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     odToneKnob.setLookAndFeel(&blackHexKnobLAF);
     odToneKnob.addListener(this);
     odToneKnob.setRange(1000.0, 20000.0);
-    odToneKnob.setValue(10000.0);
+    odToneKnob.setValue(10500.0);
     odToneKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odToneKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odToneKnob.setNumDecimalPlacesToDisplay(1);
@@ -118,8 +83,8 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     addAndMakeVisible(odLevelKnob);
     odLevelKnob.setLookAndFeel(&blackHexKnobLAF);
     odLevelKnob.addListener(this);
-    odLevelKnob.setRange(-24.0, 24.0);
-    odLevelKnob.setValue(0.0);
+    odLevelKnob.setRange(-23.0, 25.0);
+    odLevelKnob.setValue(1.0);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob.setNumDecimalPlacesToDisplay(1);
@@ -127,9 +92,6 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
 
     // Size of plugin GUI
     setSize (500, 650);
-
-    // Load the preset wavenet json model from the project resources
-    //processor.loadConfigOD();
 }
 
 SmartPedalAudioProcessorEditor::~SmartPedalAudioProcessorEditor()
@@ -172,14 +134,8 @@ void SmartPedalAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     //Overall Widgets
-    levelInKnob.setBounds(15, 2, 85, 95);
-    levelOutKnob.setBounds(398, 2, 85, 95);
-    levelInLabel.setBounds(18, 43, 75, 85);
-    levelOutLabel.setBounds(403, 43, 75, 85);
     modelSelect.setBounds(142, 36, 210, 25);
     modelLabel.setBounds(193, 12, 90, 25);
-
-    loadButton.setBounds(10, 7, 100, 50);
 
     // Overdrive Widgets
     odDriveKnob.setBounds(112, 115, 125, 145);
@@ -188,7 +144,6 @@ void SmartPedalAudioProcessorEditor::resized()
     odFootSw.setBounds(220, 459, 75, 105);
     odLED.setBounds(234, 398, 75, 105);
 }
-
 
 void SmartPedalAudioProcessorEditor::loadButtonClicked()
 {
@@ -206,11 +161,7 @@ void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
     if (button == &odFootSw)
         odFootSwClicked();
-    else if (button == &loadButton)
-        loadButtonClicked();
 }
-
-
 
 void SmartPedalAudioProcessorEditor::odFootSwClicked() {
     if (processor.od_state == 0)
@@ -220,23 +171,15 @@ void SmartPedalAudioProcessorEditor::odFootSwClicked() {
     repaint();
 }
 
-
 void SmartPedalAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-    // Overall
-    if (slider == &levelInKnob) 
-        processor.setPreGain(slider->getValue());
-    else if (slider == &levelOutKnob)
-        processor.setPostGain(slider->getValue());
-
     // Overdrive    
-    else if (slider == &odDriveKnob)
+    if (slider == &odDriveKnob)
         processor.set_odDrive(slider->getValue());
     else if (slider == &odToneKnob)
         processor.set_odTone(slider->getValue());
     else if (slider == &odLevelKnob)
         processor.set_odLevel(slider->getValue());
-
 }
 
 void SmartPedalAudioProcessorEditor::modelSelectChanged()

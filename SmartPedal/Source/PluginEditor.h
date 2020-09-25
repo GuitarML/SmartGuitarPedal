@@ -42,11 +42,6 @@ private:
     void loadButtonClicked();
 
     // Global Widgets
-    Slider levelInKnob;
-    Slider levelOutKnob;
-    TextButton loadButton;
-    Label levelInLabel;
-    Label levelOutLabel;
     Label modelLabel;
 
     ComboBox modelSelect;
