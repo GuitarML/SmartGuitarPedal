@@ -24,7 +24,7 @@ https://github.com/keyth72/SmartGuitarAmp
 1. Download plugin (currently Windows 10 only) [here](https://github.com/keyth72/SmartGuitarPedal/releases)
 2. Copy to your DAW's VST directory
 3. Copy .json models from the models/ directory of this repository to the DAW's executable directory when using VST,
-   (for example: "C:\Program Files\REAPER (x64)\*.json") or to the same directory as the SmartPedal.exe when using standalone.
+   (for example: "C:\Program Files\REAPER (x64)\\*.json") or to the same directory as the SmartPedal.exe when using standalone.
  
 ## Initial Setup
 
