@@ -19,6 +19,10 @@ Feel free to create a pull request to add your own trained models to this reposi
 Also see companion plugin, the SmartGuitarAmp:
 https://github.com/keyth72/SmartGuitarAmp
 
+## Installing the plugin
+
+1. Download plugin (currently Windows 10 only) [here](https://github.com/keyth72/SmartGuitarPedal/releases)
+2. Copy to your DAW's VST directory
 
 ## Initial Setup
 
