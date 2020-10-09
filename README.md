@@ -44,8 +44,9 @@ Models are auto loaded from the working directory of the executable. When using 
 SmartPedal.exe. 
 
 
+## License
+This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
+
 This project builds off the work done here:
 https://github.com/damskaggep/WaveNetVA
 
-## License
-This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
