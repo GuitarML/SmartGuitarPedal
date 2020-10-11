@@ -29,7 +29,7 @@ https://github.com/keyth72/SmartGuitarAmp
 3. Copy .json models from the models/ directory of this repository to the DAW's executable directory when using VST,
    (for example: "C:\Program Files\REAPER (x64)\\*.json") or to the same directory as the SmartPedal.exe when using standalone.
  
-## Initial Setup
+## Build Instructions
 
 1. Clone or download this repository.
 2. Download and install [JUCE](https://juce.com/) This project uses the "Projucer" application from the JUCE website. 
