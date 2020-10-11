@@ -145,7 +145,6 @@ void SmartPedalAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
     // Overdrive Pedal ================================================================== 
     if (od_state == 1) {
         buffer.applyGain(odDrive);
-        reslowpass.process(buffer, midiMessages, numSamples, numInputChannels);
         waveNet.process(buffer.getArrayOfReadPointers(), buffer.getArrayOfWritePointers(),
             buffer.getNumSamples());
         buffer.applyGain(odLevel);
@@ -233,14 +232,6 @@ float SmartPedalAudioProcessor::convertLogScale(float in_value, float x_min, flo
     return converted_value;
 }
 
-
-void SmartPedalAudioProcessor::set_odTone(float toneKnobValue)
-{
-    float sampleRate = getSampleRate();
-    // Transform to log scale
-    float new_knobValue = convertLogScale(toneKnobValue, 1000, 20000, 1000, 20000);
-    reslowpass.setParameters(new_knobValue, sampleRate);
-}
 
 void SmartPedalAudioProcessor::set_odLevel(float db_odLevel)
 {

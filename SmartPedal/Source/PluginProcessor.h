@@ -13,7 +13,6 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "WaveNet.h"
 #include "WaveNetLoader.h"
-#include "ResonantLowpassFilter.h"
 
 
 //==============================================================================
@@ -69,7 +68,6 @@ public:
     // Overdrive Pedal
     void set_odDrive(float odDriveKnobLevel);
     float convertLogScale(float in_value, float x_min, float x_max, float y_min, float y_max);
-    void set_odTone(float toneKnobValue);
     void set_odLevel(float db_odLevel);
 
 
@@ -85,7 +83,6 @@ public:
 
 private:
     WaveNet waveNet;  // OverDrive Pedal
-    ResonantLowpassFilter reslowpass; // Overdrive tone control
     float preGain = 1.0;
     float postGain = 1.0;
     // Overdrive pedal

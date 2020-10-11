@@ -49,7 +49,6 @@ private:
     // Overdrive Widgets
     Slider odDriveKnob;
     Slider odLevelKnob;
-    Slider odToneKnob;
     ImageButton odFootSw;
     ImageButton odLED;
 

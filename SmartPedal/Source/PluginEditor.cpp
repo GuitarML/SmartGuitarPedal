@@ -70,16 +70,6 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     odDriveKnob.setNumDecimalPlacesToDisplay(1);
     odDriveKnob.setDoubleClickReturnValue(true, 0.0);
 
-    addAndMakeVisible(odToneKnob);
-    odToneKnob.setLookAndFeel(&blackHexKnobLAF);
-    odToneKnob.addListener(this);
-    odToneKnob.setRange(1000.0, 20000.0);
-    odToneKnob.setValue(10500.0);
-    odToneKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    odToneKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    odToneKnob.setNumDecimalPlacesToDisplay(1);
-    odToneKnob.setDoubleClickReturnValue(true, 10000.0);
-
     addAndMakeVisible(odLevelKnob);
     odLevelKnob.setLookAndFeel(&blackHexKnobLAF);
     odLevelKnob.addListener(this);
@@ -140,7 +130,6 @@ void SmartPedalAudioProcessorEditor::resized()
     // Overdrive Widgets
     odDriveKnob.setBounds(112, 115, 125, 145);
     odLevelKnob.setBounds(283, 115, 125, 145);
-    odToneKnob.setBounds(195, 234, 125, 145);
     odFootSw.setBounds(220, 459, 75, 105);
     odLED.setBounds(234, 398, 75, 105);
 }
@@ -176,8 +165,6 @@ void SmartPedalAudioProcessorEditor::sliderValueChanged(Slider* slider)
     // Overdrive    
     if (slider == &odDriveKnob)
         processor.set_odDrive(slider->getValue());
-    else if (slider == &odToneKnob)
-        processor.set_odTone(slider->getValue());
     else if (slider == &odLevelKnob)
         processor.set_odLevel(slider->getValue());
 }

@@ -37,10 +37,6 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="ZHAWrp" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="q7ncaK" name="ResonantLowpassFilter.cpp" compile="1" resource="0"
-            file="Source/ResonantLowpassFilter.cpp"/>
-      <FILE id="xESCmj" name="ResonantLowpassFilter.h" compile="0" resource="0"
-            file="Source/ResonantLowpassFilter.h"/>
       <FILE id="v7ySse" name="WaveNet.cpp" compile="1" resource="0" file="Source/WaveNet.cpp"/>
       <FILE id="bSp8DX" name="WaveNet.h" compile="0" resource="0" file="Source/WaveNet.h"/>
       <FILE id="yRqfH6" name="WaveNetLoader.cpp" compile="1" resource="0"
