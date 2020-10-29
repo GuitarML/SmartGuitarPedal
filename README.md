@@ -28,6 +28,8 @@ https://github.com/keyth72/SmartGuitarAmp
 2. Copy to your DAW's VST directory
 3. Copy .json models from the models/ directory of this repository to the DAW's executable directory when using VST,
    (for example: "C:\Program Files\REAPER (x64)\\*.json") or to the same directory as the SmartPedal.exe when using standalone.
+4. As an alternative to the drop down menu, as of release v1.2 there is a "LOAD MODEL" button to select one model 
+   at a time from a file select dialog. Note that the model name won't appear in the drop down, but will be loaded by the plugin.
  
 ## Build Instructions
 
