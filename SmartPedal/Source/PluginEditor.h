@@ -37,7 +37,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     SmartPedalAudioProcessor& processor;
-
+    TextButton loadButton;
     virtual void buttonClicked(Button* button) override;
     void loadButtonClicked();
 

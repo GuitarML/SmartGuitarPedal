@@ -19,6 +19,9 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     // editor's size to whatever you need it to
 
     // Overall Widgets
+    addAndMakeVisible(loadButton);
+    loadButton.setButtonText("LOAD MODEL");
+    loadButton.addListener(this);
 
     addAndMakeVisible(modelLabel);
     modelLabel.setText("Model", juce::NotificationType::dontSendNotification);
@@ -124,6 +127,7 @@ void SmartPedalAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     //Overall Widgets
+    loadButton.setBounds(184, 68, 120, 20);
     modelSelect.setBounds(142, 36, 210, 25);
     modelLabel.setBounds(193, 12, 90, 25);
 
@@ -136,20 +140,23 @@ void SmartPedalAudioProcessorEditor::resized()
 
 void SmartPedalAudioProcessorEditor::loadButtonClicked()
 {
-    FileChooser chooser("Load model directory...",
+    FileChooser chooser("Load a .json model...",
         {},
         "*.json");
-    if (chooser.browseForDirectory())
+    if (chooser.browseForFileToOpen())
     {
-        processor.currentDirectory = chooser.getResult();
-         
+        File file = chooser.getResult();
+        processor.loadConfig(file);
     }
 }
 
 void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-    if (button == &odFootSw)
+    if (button == &odFootSw) {
         odFootSwClicked();
+    } else if (button == &loadButton) {
+        loadButtonClicked();
+    }
 }
 
 void SmartPedalAudioProcessorEditor::odFootSwClicked() {
