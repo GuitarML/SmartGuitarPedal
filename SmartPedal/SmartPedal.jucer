@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="ym7AY5" name="SmartPedal" projectType="audioplug" pluginAUMainType="'aufx'"
               companyName="HandDrawnAmps" headerPath="$(HOME)/eigen/" displaySplashScreen="1"
-              jucerFormatVersion="1" pluginCode="sp1" maxBinaryFileSize="20971520">
+              jucerFormatVersion="1" pluginCode="sp1" maxBinaryFileSize="20971520"
+              pluginManufacturer="GuitarML">
   <MAINGROUP id="ZrSGof" name="SmartPedal">
     <GROUP id="{0250E2E8-A733-0AA7-0A08-97085228CF87}" name="Resources">
       <FILE id="v4BKeZ" name="footswitch_down.png" compile="0" resource="1"
@@ -72,7 +73,7 @@
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="SmartPedal"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="SmartPedal"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="SmartPedal" headerPath="C:\Users\rache\Desktop\dev\eigen-3.3.7"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video"/>
