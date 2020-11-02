@@ -67,21 +67,21 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     odDriveKnob.setLookAndFeel(&blackHexKnobLAF);
     odDriveKnob.addListener(this);
     odDriveKnob.setRange(-23.0, 25.0);
-    odDriveKnob.setValue(1.0);
+    odDriveKnob.setValue(processor.pedalDriveKnobState);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odDriveKnob.setNumDecimalPlacesToDisplay(1);
-    odDriveKnob.setDoubleClickReturnValue(true, 0.0);
+    odDriveKnob.setDoubleClickReturnValue(true, 1.0);
 
     addAndMakeVisible(odLevelKnob);
     odLevelKnob.setLookAndFeel(&blackHexKnobLAF);
     odLevelKnob.addListener(this);
     odLevelKnob.setRange(-23.0, 25.0);
-    odLevelKnob.setValue(1.0);
+    odLevelKnob.setValue(processor.pedalLevelKnobState);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
     odLevelKnob.setNumDecimalPlacesToDisplay(1);
-    odLevelKnob.setDoubleClickReturnValue(true, 0.0);
+    odLevelKnob.setDoubleClickReturnValue(true, 1.0);
 
     // Size of plugin GUI
     setSize (500, 650);

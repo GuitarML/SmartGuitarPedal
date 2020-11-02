@@ -209,20 +209,12 @@ void SmartPedalAudioProcessor::loadConfig(File configFile)
 }
 
 
-void SmartPedalAudioProcessor::setPreGain(float dbValue)
-{
-    preGain = decibelToLinear(dbValue);
-}
-
-void SmartPedalAudioProcessor::setPostGain(float dbValue)
-{
-    postGain = decibelToLinear(dbValue);
-}
-
 void SmartPedalAudioProcessor::set_odDrive(float odDriveKnobValue)
 {
     odDrive = decibelToLinear(odDriveKnobValue);
+    pedalDriveKnobState = odDriveKnobValue;
 }
+
 
 float SmartPedalAudioProcessor::convertLogScale(float in_value, float x_min, float x_max, float y_min, float y_max)
 {
@@ -236,6 +228,7 @@ float SmartPedalAudioProcessor::convertLogScale(float in_value, float x_min, flo
 void SmartPedalAudioProcessor::set_odLevel(float db_odLevel)
 {
     odLevel = decibelToLinear(db_odLevel);
+    pedalLevelKnobState = db_odLevel;
 }
 
 
