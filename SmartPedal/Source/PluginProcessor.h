@@ -61,9 +61,6 @@ public:
     void addDirectory(const File& file);
 
     void loadConfig(File configFile);
-    
-    void setPreGain(float dbValue);
-    void setPostGain(float dbValue);
 
     // Overdrive Pedal
     void set_odDrive(float odDriveKnobLevel);
@@ -75,6 +72,8 @@ public:
 
     // Pedal/amp states
     int od_state = 1;       // 0 = off, 1 = on
+    float pedalDriveKnobState = 1.0;
+    float pedalLevelKnobState = 1.0;
 
     File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
 
