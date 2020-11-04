@@ -3,7 +3,7 @@
 Guitar plugin made with JUCE that uses neural network models to emulate real world hardware.
 
 See video demo here:
-https://youtu.be/4zwZNa7Kwwo
+https://www.youtube.com/watch?v=8GAr6qQAlxY
 
 This plugin uses a WaveNet model to recreate the sound of real world hardware, such as
 a TS9 Tubescreamer or Blues Jr amp. Drive and Level are used for simple ways to
@@ -13,14 +13,14 @@ control the sound. The WaveNet model is effective at emulating distortion style 
 
 You can create your own models and load them in SmartGuitarPedal using the following Github repository:
 
-https://github.com/keyth72/PedalNetRT
+https://github.com/GuitarML/PedalNetRT
 
 Model training is done using PyTorch on pre recorded .wav samples. More info in the above repository.
 Feel free to create a pull request to add your own trained models to this repository.
 
 
 Also see companion plugin, the SmartGuitarAmp:
-https://github.com/keyth72/SmartGuitarAmp
+https://github.com/GuitarML/SmartGuitarAmp
 
 ## Installing the plugin
 
