@@ -15,8 +15,9 @@ You can create your own models and load them in SmartGuitarPedal using the follo
 
 https://github.com/GuitarML/PedalNetRT
 
-Model training is done using PyTorch on pre recorded .wav samples. More info in the above repository.
-Feel free to create a pull request to add your own trained models to this repository.
+Model training is done using PyTorch on pre recorded .wav samples. More info in the above repository. 
+To share your best models, email the json files to smartguitarml@gmail.com and they may be included 
+in the latest release as a downloadable zip.
 
 
 Also see companion plugin, the SmartGuitarAmp:
