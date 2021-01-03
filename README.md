@@ -28,7 +28,7 @@ https://github.com/GuitarML/SmartGuitarAmp
 1. Download plugin (Windows 10, Ubuntu Linux) [here](https://github.com/keyth72/SmartGuitarPedal/releases)
 2. Copy to your DAW's VST directory
 3. Copy .json models from the models/ directory of this repository to the DAW's executable directory when using VST,
-   (for example: "C:\Program Files\REAPER (x64)\\*.json") or to the same directory as the SmartPedal.exe when using standalone.
+   (for example: "C:\Program Files\REAPER (x64)\\*.json") or to the same directory as the SmartPedal.exe when using standalone. You can also add the files to your user application data directory (see [Loading hardware models](#loading-hardware-models) below).
 4. As an alternative to the drop down menu, as of release v1.2 there is a "LOAD MODEL" button to select one model 
    at a time from a file select dialog. Note that the model name won't appear in the drop down, but will be loaded by the plugin.
  
@@ -48,6 +48,11 @@ Note: Make sure to build in Release mode unless actually debugging. Debug mode w
 Models are auto loaded from the working directory of the executable. When using the plugin, add the .json files to your DAW
 .exe path (for example: "C:\Program Files\REAPER (x64)"). When running the stand alone exe, put in the same directory as
 SmartPedal.exe. 
+
+Alternatively, you can add the files to your user application data directory under "GuitarML\SmartPedal", and the plugin should load them. This corresponds to:
+- Mac: `~/Library/GuitarML/SmartPedal`
+- Linux: `~/.config/GuitarML/SmartPedal`
+- Windows: `C:\Users\<username>\AppData\Roaming\GuitarML\SmartPedal`
 
 
 ## License
