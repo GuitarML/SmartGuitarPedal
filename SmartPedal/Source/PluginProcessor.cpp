@@ -26,7 +26,7 @@ SmartPedalAudioProcessor::SmartPedalAudioProcessor()
     
 #endif
 {
-    addDirectory(currentDirectory);
+    setupDataDirectories();
 }
 
 SmartPedalAudioProcessor::~SmartPedalAudioProcessor()
@@ -179,7 +179,30 @@ void SmartPedalAudioProcessor::setStateInformation (const void* data, int sizeIn
     // whose contents will have been created by the getStateInformation() call.
 }
 
-//void SmartPedalAudioProcessor::addDirectory(File file)
+void SmartPedalAudioProcessor::setupDataDirectories()
+{
+    // ========
+    // Current working directory
+    addDirectory(currentDirectory);
+    
+    // ========
+    // User app data directory
+    File userAppDataDirectory = File::getSpecialLocation(File::userApplicationDataDirectory).getChildFile(JucePlugin_Manufacturer).getChildFile(JucePlugin_Name);
+    File userAppDataTempFile = userAppDataDirectory.getChildFile("tmp.pdl");
+    
+    // Create (and delete) temp file if necessary, so that user doesn't have
+    // to manually create directories
+    if (!userAppDataDirectory.exists()) {
+        userAppDataTempFile.create();
+    }
+    if (userAppDataTempFile.existsAsFile()) {
+        userAppDataTempFile.deleteFile();
+    }
+    
+    // Add the directory
+    addDirectory(userAppDataDirectory);
+}
+
 void SmartPedalAudioProcessor::addDirectory(const File& file)
 {
     if (file.isDirectory())

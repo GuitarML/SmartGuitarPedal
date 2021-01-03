@@ -58,8 +58,9 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    // Files and configuration
+    void setupDataDirectories();
     void addDirectory(const File& file);
-
     void loadConfig(File configFile);
 
     // Overdrive Pedal
