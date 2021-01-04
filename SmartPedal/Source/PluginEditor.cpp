@@ -32,8 +32,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
     int c = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
-        // modelSelect.addItem(jsonFile.getFileName(), c);
-        modelSelect.addItem(jsonFile.getFullPathName(), c);
+        modelSelect.addItem(jsonFile.getFileName(), c);
         c += 1;
     }
     modelSelect.onChange = [this] {modelSelectChanged();};
