@@ -178,6 +178,8 @@ void SmartPedalAudioProcessorEditor::sliderValueChanged(Slider* slider)
 
 void SmartPedalAudioProcessorEditor::modelSelectChanged()
 {
-    String selectedFile = modelSelect.getText();
-    processor.loadConfig(File(selectedFile));
+    const int selectedFileIndex = modelSelect.getSelectedItemIndex();
+    if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size()) {
+        processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
+    }
 }
