@@ -2,8 +2,7 @@
 
 Guitar plugin made with JUCE that uses neural network models to emulate real world hardware.
 
-See video demo here:
-https://www.youtube.com/watch?v=8GAr6qQAlxY
+See video demo on [YouTube](https://www.youtube.com/watch?v=8GAr6qQAlxY)
 
 This plugin uses a WaveNet model to recreate the sound of real world hardware, such as
 a TS9 Tubescreamer or Blues Jr amp. Drive and Level are used for simple ways to
@@ -11,17 +10,14 @@ control the sound. The WaveNet model is effective at emulating distortion style 
 
 ![app](https://github.com/keyth72/SmartGuitarPedal/blob/master/resources/app_pic.png)
 
-You can create your own models and load them in SmartGuitarPedal using the following Github repository:
-
-https://github.com/GuitarML/PedalNetRT
+You can create your own models and load them in SmartGuitarPedal using the [PedalNetRT](https://github.com/GuitarML/PedalNetRT) repository.
 
 Model training is done using PyTorch on pre recorded .wav samples. More info in the above repository. 
 To share your best models, email the json files to smartguitarml@gmail.com and they may be included 
 in the latest release as a downloadable zip.
 
 
-Also see companion plugin, the SmartGuitarAmp:
-https://github.com/GuitarML/SmartGuitarAmp
+Also see companion plugin, the [SmartGuitarAmp](https://github.com/GuitarML/SmartGuitarAmp)
 
 ## Installing the plugin
 
@@ -58,7 +54,4 @@ Alternatively, you can add the files to your user application data directory und
 ## License
 This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
 
-This project builds off the work done here:
-https://github.com/damskaggep/WaveNetVA
-
-
+This project builds off the work done in the [WaveNetVA](https://github.com/damskaggep/WaveNetVA) repository.
