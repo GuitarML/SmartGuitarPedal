@@ -2,7 +2,8 @@
 
 Guitar plugin made with JUCE that uses neural network models to emulate real world hardware.
 
-See video demo on [YouTube](https://www.youtube.com/watch?v=8GAr6qQAlxY)
+See video demo on [YouTube](https://www.youtube.com/watch?v=8GAr6qQAlxY), along with a sound comparison [video](https://youtu.be/xEOFz3UcDyA) between
+the TS9 Tubescreamer and a deep learning model using the SmartGuitarPedal.
 
 This plugin uses a WaveNet model to recreate the sound of real world hardware, such as
 a TS9 Tubescreamer or Blues Jr amp. Drive and Level are used for simple ways to
