@@ -30,6 +30,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
 
     addAndMakeVisible(modelSelect);
     modelSelect.setColour(juce::Label::textColourId, juce::Colours::black);
+    modelSelect.setScrollWheelEnabled(true);
     int c = 1;
     for (const auto& jsonFile : processor.jsonFiles) {
         modelSelect.addItem(jsonFile.getFileName(), c);
@@ -85,6 +86,15 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     //odLevelKnob.setNumDecimalPlacesToDisplay(1);
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
+    addAndMakeVisible(versionLabel);
+    versionLabel.setText("v1.4", juce::NotificationType::dontSendNotification);
+    versionLabel.setJustificationType(juce::Justification::left);
+    versionLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    //auto font = versionLabel.getFont();
+    //float height = font.getHeight();
+    //font.setHeight(height); // 0.75
+    versionLabel.setFont(font);
+
     // Size of plugin GUI
     setSize (500, 650);
     resetImages();
@@ -114,8 +124,9 @@ void SmartPedalAudioProcessorEditor::resized()
 
     //Overall Widgets
     loadButton.setBounds(184, 68, 120, 20);
-    modelSelect.setBounds(142, 36, 210, 25);
+    modelSelect.setBounds(50, 36, 400, 25);
     modelLabel.setBounds(193, 12, 90, 25);
+    versionLabel.setBounds(480, 635, 60, 10);
 
     // Overdrive Widgets
     odDriveKnob.setBounds(112, 115, 125, 145);
@@ -137,9 +148,9 @@ void SmartPedalAudioProcessorEditor::loadButtonClicked()
     {
         Array<File> files;
         if (chooser.getResult().existsAsFile()) { // If a file is selected
-            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.wav");
+            files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
         } else if (chooser.getResult().isDirectory()){ // Else folder is selected
-            files = chooser.getResult().findChildFiles(2, false, "*.wav");
+            files = chooser.getResult().findChildFiles(2, false, "*.json");
         }
         
         // Change the target IR folder
@@ -214,7 +225,7 @@ void SmartPedalAudioProcessorEditor::odFootSwClicked() {
         processor.fw_state = 1;
     else
         processor.fw_state = 0;
-    repaint();
+    resetImages();
 }
 
 void SmartPedalAudioProcessorEditor::sliderValueChanged(Slider* slider)

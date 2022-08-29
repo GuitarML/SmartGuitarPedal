@@ -49,6 +49,7 @@ private:
 
     // Global Widgets
     Label modelLabel;
+    Label versionLabel;
 
     ComboBox modelSelect;
 
