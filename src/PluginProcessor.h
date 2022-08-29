@@ -14,6 +14,10 @@
 #include "WaveNet.h"
 #include "WaveNetLoader.h"
 
+#define GAIN_ID "drive"
+#define GAIN_NAME "Drive"
+#define MASTER_ID "level"
+#define MASTER_NAME "Level"
 
 //==============================================================================
 /**
@@ -59,35 +63,41 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     // Files and configuration
-    void setupDataDirectories();
-    void addDirectory(const File& file);
+    //void setupDataDirectories();
+    //void addDirectory(const File& file);
     void loadConfig(File configFile);
 
-    // Overdrive Pedal
-    void set_odDrive(float odDriveKnobLevel);
-    float convertLogScale(float in_value, float x_min, float x_max, float y_min, float y_max);
-    void set_odLevel(float db_odLevel);
-
-
-    float decibelToLinear(float dbValue);
+    //File userAppDataDirectory_irs = File::getSpecialLocation(File::userDesktopDirectory);
 
     // Pedal/amp states
-    int od_state = 1;       // 0 = off, 1 = on
-    float pedalDriveKnobState = 1.0;
-    float pedalLevelKnobState = 1.0;
+    int fw_state = 1;       // 0 = off, 1 = on
 
     File currentDirectory = File::getCurrentWorkingDirectory().getFullPathName();
+    int current_model_index = 0;
 
     Array<File> fileArray;
     std::vector<File> jsonFiles;
+    int num_models = 0;
+
+    AudioProcessorValueTreeState treeState;
 
 private:
-    WaveNet waveNet;  // OverDrive Pedal
-    float preGain = 1.0;
-    float postGain = 1.0;
+
+    std::atomic<float>* driveParam = nullptr;
+    std::atomic<float>* masterParam = nullptr;
+
+    float previousDriveValue = 0.5;
+    float previousMasterValue = 0.5;
+
+    //chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
+
+    WaveNet waveNet;
+
+    //float preGain = 1.0;
+    //float postGain = 1.0;
     // Overdrive pedal
-    float odLevel = 0.0;
-    float odDrive = 0.0;
+    //float odLevel = 0.0;
+    //float odDrive = 0.0;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SmartPedalAudioProcessor)

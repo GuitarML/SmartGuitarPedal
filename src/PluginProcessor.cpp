@@ -22,11 +22,15 @@ SmartPedalAudioProcessor::SmartPedalAudioProcessor()
         .withOutput("Output", AudioChannelSet::stereo(), true)
 #endif
     ),
-    waveNet(1, 1, 1, 1, "linear", { 1 })
+    waveNet(1, 1, 1, 1, "linear", { 1 }),
+    treeState(*this, nullptr, "PARAMETER", { std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5f),
+                        std::make_unique<AudioParameterFloat>(MASTER_ID, MASTER_NAME, NormalisableRange<float>(0.0f, 1.0f, 0.01f), 0.5) })
+
     
 #endif
 {
-    setupDataDirectories();
+    driveParam = treeState.getRawParameterValue (GAIN_ID);
+    masterParam = treeState.getRawParameterValue (MASTER_ID);
 }
 
 SmartPedalAudioProcessor::~SmartPedalAudioProcessor()
@@ -101,6 +105,11 @@ void SmartPedalAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
     waveNet.prepareToPlay(samplesPerBlock);
+
+    // prepare resampler for target sample rate: 44.1 kHz
+    //constexpr double targetSampleRate = 44100.0;
+    //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
+
 }
 
 void SmartPedalAudioProcessor::releaseResources()
@@ -138,16 +147,49 @@ void SmartPedalAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 {
     ScopedNoDenormals noDenormals;
 
+    auto driveValue = static_cast<float> (driveParam->load());
+    auto masterValue = static_cast<float> (masterParam->load());
+
     // Setup Audio Data
     const int numSamples = buffer.getNumSamples();
     const int numInputChannels = getTotalNumInputChannels();
 
     // Overdrive Pedal ================================================================== 
-    if (od_state == 1) {
-        buffer.applyGain(odDrive);
+    if (fw_state == 1) {
+        
+        // Master Volume 
+        // Apply ramped changes for gain smoothing
+        if (driveValue == previousDriveValue)
+        {
+            buffer.applyGain(driveValue);
+        }
+        else {
+            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue, driveValue);
+            previousDriveValue = driveValue;
+        }
+
+        // resample to target sample rate
+        //dsp::AudioBlock<float> block(buffer);
+        //auto block = dsp::AudioBlock<float>(buffer.getArrayOfWritePointers(), 1, numSamples);
+        //auto block44k = resampler.processIn(block);
+
         waveNet.process(buffer.getArrayOfReadPointers(), buffer.getArrayOfWritePointers(),
             buffer.getNumSamples());
-        buffer.applyGain(odLevel);
+        
+
+        // resample back to original sample rate
+        //resampler.processOut(block48k, block);
+
+        // Master Volume 
+        // Apply ramped changes for gain smoothing
+        if (masterValue == previousMasterValue)
+        {
+            buffer.applyGain(masterValue);
+        }
+        else {
+            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousMasterValue, masterValue);
+            previousMasterValue = masterValue;
+        }
     }
 
     for (int ch = 1; ch < buffer.getNumChannels(); ++ch)
@@ -171,46 +213,29 @@ void SmartPedalAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+    auto state = treeState.copyState();
+    std::unique_ptr<XmlElement> xml (state.createXml());
+    xml->setAttribute ("fw_state", fw_state);
+    copyXmlToBinary (*xml, destData);
+
 }
 
 void SmartPedalAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
-}
 
-void SmartPedalAudioProcessor::setupDataDirectories()
-{
-    // ========
-    // Current working directory
-    addDirectory(currentDirectory);
-    
-    // ========
-    // User app data directory
-    File userAppDataDirectory = File::getSpecialLocation(File::userApplicationDataDirectory).getChildFile(JucePlugin_Manufacturer).getChildFile(JucePlugin_Name);
-    File userAppDataTempFile = userAppDataDirectory.getChildFile("tmp.pdl");
-    
-    // Create (and delete) temp file if necessary, so that user doesn't have
-    // to manually create directories
-    if (!userAppDataDirectory.exists()) {
-        userAppDataTempFile.create();
-    }
-    if (userAppDataTempFile.existsAsFile()) {
-        userAppDataTempFile.deleteFile();
-    }
-    
-    // Add the directory
-    addDirectory(userAppDataDirectory);
-}
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
 
-void SmartPedalAudioProcessor::addDirectory(const File& file)
-{
-    if (file.isDirectory())
+    if (xmlState.get() != nullptr)
     {
-        juce::Array<juce::File> results;
-        file.findChildFiles(results, juce::File::findFiles, false, "*.json");
-        for (int i = results.size(); --i >= 0;)
-            jsonFiles.push_back(File(results.getReference(i).getFullPathName()));
+        if (xmlState->hasTagName (treeState.state.getType()))
+        {
+            treeState.replaceState (juce::ValueTree::fromXml (*xmlState));
+            fw_state = xmlState->getBoolAttribute ("fw_state");
+            if (auto* editor = dynamic_cast<SmartPedalAudioProcessorEditor*> (getActiveEditor()))
+                editor->resetImages();
+        }
     }
 }
 
@@ -231,34 +256,6 @@ void SmartPedalAudioProcessor::loadConfig(File configFile)
     this->suspendProcessing(false);
 }
 
-
-void SmartPedalAudioProcessor::set_odDrive(float odDriveKnobValue)
-{
-    odDrive = decibelToLinear(odDriveKnobValue);
-    pedalDriveKnobState = odDriveKnobValue;
-}
-
-
-float SmartPedalAudioProcessor::convertLogScale(float in_value, float x_min, float x_max, float y_min, float y_max)
-{
-    float b = log(y_max / y_min) / (x_max - x_min);
-    float a = y_max / exp(b * x_max);
-    float converted_value = a * exp(b * in_value);
-    return converted_value;
-}
-
-
-void SmartPedalAudioProcessor::set_odLevel(float db_odLevel)
-{
-    odLevel = decibelToLinear(db_odLevel);
-    pedalLevelKnobState = db_odLevel;
-}
-
-
-float SmartPedalAudioProcessor::decibelToLinear(float dbValue)
-{
-    return powf(10.0, dbValue/20.0);
-}
 
 //==============================================================================
 // This creates new instances of the plugin..
