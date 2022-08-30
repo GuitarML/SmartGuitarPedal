@@ -97,7 +97,10 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
 
     // Size of plugin GUI
     setSize (500, 650);
+
     resetImages();
+
+    loadFromFolder();
 }
 
 SmartPedalAudioProcessorEditor::~SmartPedalAudioProcessorEditor()
@@ -132,70 +135,90 @@ void SmartPedalAudioProcessorEditor::resized()
     odDriveKnob.setBounds(112, 115, 125, 145);
     odLevelKnob.setBounds(283, 115, 125, 145);
     odFootSw.setBounds(220, 459, 75, 105);
-    odLED.setBounds(234, 398, 75, 105);
+    odLED.setBounds(239, 398, 75, 105);
 }
 
 
 void SmartPedalAudioProcessorEditor::loadButtonClicked()
 {
     myChooser = std::make_unique<FileChooser> ("Select a folder to load models from",
-                                               File::getSpecialLocation (File::userDesktopDirectory),
+                                               processor.folder,
                                                "*.json");
  
     auto folderChooserFlags = FileBrowserComponent::openMode | FileBrowserComponent::canSelectDirectories | FileBrowserComponent::canSelectFiles;
  
     myChooser->launchAsync (folderChooserFlags, [this] (const FileChooser& chooser)                
     {
+        if (!chooser.getResult().exists()) {
+                return;
+        }
         Array<File> files;
         if (chooser.getResult().existsAsFile()) { // If a file is selected
+            processor.saved_model = chooser.getResult();
             files = chooser.getResult().getParentDirectory().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult().getParentDirectory();
         } else if (chooser.getResult().isDirectory()){ // Else folder is selected
             files = chooser.getResult().findChildFiles(2, false, "*.json");
+            processor.folder = chooser.getResult();
         }
         
-        // Change the target IR folder
-        //processor.userAppDataDirectory_irs = chooser.getResult();
         processor.jsonFiles.clear();
-        //processor.num_irs = 0;
+
         modelSelect.clear();
 
         if (files.size() > 0) {
-            //Array<File> files = chooser.getResults();
             for (auto file : files) {
-
-                //File fullpath = processor.userAppDataDirectory_irs.getFullPathName() + "/" + file.getFileName();
-                //bool b = fullpath.existsAsFile();
-                //bool b = file.existsAsFile();
-
-                //if (b == false) {
-
-                    // Copy selected file to model directory and load into dropdown menu
-                    // bool a = file.copyFileTo(fullpath);
-                    // if (a == true) {
-
-                    // Add to ir-a menu
                 modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
 
                 processor.jsonFiles.push_back(file);
                 processor.num_models += 1;
 
-                //}
-                // Sort jsonFiles alphabetically
-                //std::sort(processor.irFiles.begin(), processor.irFiles.end());
-            //}
             }
-            // Load last file in selected files list for both A and B IR's
-            //modelSelect.setSelectedItemIndex(processor.jsonFiles.size(), juce::NotificationType::dontSendNotification);
-            //processor.loadIRa(files.getLast());
-            //processor.loadIRb(files.getLast());
-            modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
-            
-            modelSelectChanged();
+
+            if (chooser.getResult().existsAsFile()) {
+                modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
+                processor.loadConfig(processor.saved_model);
+            }
+            else {
+                modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
+                modelSelectChanged();
+            }
+
+
+            //modelSelectChanged();
 
         }
     });
     
 }
+
+void SmartPedalAudioProcessorEditor::loadFromFolder()
+{
+
+    Array<File> files;
+    files = processor.folder.findChildFiles(2, false, "*.json");
+
+    processor.jsonFiles.clear();
+    modelSelect.clear();
+
+    if (files.size() > 0) {
+        //Array<File> files = chooser.getResults();
+        for (auto file : files) {
+            modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
+            processor.jsonFiles.push_back(file);
+            processor.num_models += 1;
+        }
+        //modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
+        //processor.loadConfig(processor.saved_model);
+        processor.loadConfig(processor.jsonFiles[processor.current_model_index]);
+        modelSelect.setText(processor.jsonFiles[processor.current_model_index].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
+
+
+        //modelSelectChanged();
+    }
+}
+
+
 
 /*
 void SmartPedalAudioProcessorEditor::loadButtonClicked()

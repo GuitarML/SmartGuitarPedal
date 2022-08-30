@@ -67,6 +67,7 @@ public:
     //void addDirectory(const File& file);
     void loadConfig(File configFile);
 
+
     //File userAppDataDirectory_irs = File::getSpecialLocation(File::userDesktopDirectory);
 
     // Pedal/amp states
@@ -78,8 +79,12 @@ public:
     Array<File> fileArray;
     std::vector<File> jsonFiles;
     int num_models = 0;
+    File folder = File::getSpecialLocation(File::userDesktopDirectory);
+    //File folder;
+    File saved_model;
 
     AudioProcessorValueTreeState treeState;
+    
 
 private:
 

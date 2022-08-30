@@ -32,6 +32,7 @@ public:
     void resized() override;
     std::unique_ptr<FileChooser> myChooser;
 
+    void loadFromFolder();
     void resetImages();
 
 private:
