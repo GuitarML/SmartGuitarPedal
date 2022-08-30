@@ -169,12 +169,9 @@ void SmartPedalAudioProcessorEditor::loadButtonClicked()
         if (files.size() > 0) {
             for (auto file : files) {
                 modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
-
                 processor.jsonFiles.push_back(file);
                 processor.num_models += 1;
-
             }
-
             if (chooser.getResult().existsAsFile()) {
                 modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
                 processor.loadConfig(processor.saved_model);
@@ -183,10 +180,6 @@ void SmartPedalAudioProcessorEditor::loadButtonClicked()
                 modelSelect.setSelectedItemIndex(0, juce::NotificationType::dontSendNotification);
                 modelSelectChanged();
             }
-
-
-            //modelSelectChanged();
-
         }
     });
     
@@ -213,26 +206,10 @@ void SmartPedalAudioProcessorEditor::loadFromFolder()
         processor.loadConfig(processor.jsonFiles[processor.current_model_index]);
         modelSelect.setText(processor.jsonFiles[processor.current_model_index].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
 
-
         //modelSelectChanged();
     }
 }
 
-
-
-/*
-void SmartPedalAudioProcessorEditor::loadButtonClicked()
-{
-    FileChooser chooser("Load a .json model...",
-        {},
-        "*.json");
-    if (chooser.browseForFileToOpen())
-    {
-        File file = chooser.getResult();
-        processor.loadConfig(file);
-    }
-}
-*/
 
 void SmartPedalAudioProcessorEditor::buttonClicked(juce::Button* button)
 {
@@ -253,11 +230,7 @@ void SmartPedalAudioProcessorEditor::odFootSwClicked() {
 
 void SmartPedalAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-    // Overdrive    
-    //if (slider == &odDriveKnob)
-    //    processor.set_odDrive(slider->getValue());
-    //else if (slider == &odLevelKnob)
-    //    processor.set_odLevel(slider->getValue());
+
 }
 
 void SmartPedalAudioProcessorEditor::modelSelectChanged()

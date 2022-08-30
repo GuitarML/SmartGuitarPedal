@@ -63,12 +63,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     // Files and configuration
-    //void setupDataDirectories();
-    //void addDirectory(const File& file);
     void loadConfig(File configFile);
-
-
-    //File userAppDataDirectory_irs = File::getSpecialLocation(File::userDesktopDirectory);
 
     // Pedal/amp states
     int fw_state = 1;       // 0 = off, 1 = on
@@ -80,7 +75,6 @@ public:
     std::vector<File> jsonFiles;
     int num_models = 0;
     File folder = File::getSpecialLocation(File::userDesktopDirectory);
-    //File folder;
     File saved_model;
 
     AudioProcessorValueTreeState treeState;
@@ -94,15 +88,7 @@ private:
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
 
-    //chowdsp::ResampledProcess<chowdsp::ResamplingTypes::SRCResampler<>> resampler;
-
     WaveNet waveNet;
-
-    //float preGain = 1.0;
-    //float postGain = 1.0;
-    // Overdrive pedal
-    //float odLevel = 0.0;
-    //float odDrive = 0.0;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SmartPedalAudioProcessor)

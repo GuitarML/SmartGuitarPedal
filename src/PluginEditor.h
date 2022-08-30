@@ -19,9 +19,7 @@
 */
 class SmartPedalAudioProcessorEditor  : public AudioProcessorEditor,
                                        private Button::Listener,
-                                       private Slider::Listener
-                                       //private ComboBox::Listener
-                                
+                                       private Slider::Listener                  
 {
 public:
     SmartPedalAudioProcessorEditor (SmartPedalAudioProcessor&);

@@ -106,10 +106,6 @@ void SmartPedalAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
     // initialisation that you need..
     waveNet.prepareToPlay(samplesPerBlock);
 
-    // prepare resampler for target sample rate: 44.1 kHz
-    //constexpr double targetSampleRate = 44100.0;
-    //resampler.prepareWithTargetSampleRate ({ sampleRate, (uint32) samplesPerBlock, 1 }, targetSampleRate);
-
 }
 
 void SmartPedalAudioProcessor::releaseResources()
@@ -168,18 +164,9 @@ void SmartPedalAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
             previousDriveValue = driveValue;
         }
 
-        // resample to target sample rate
-        //dsp::AudioBlock<float> block(buffer);
-        //auto block = dsp::AudioBlock<float>(buffer.getArrayOfWritePointers(), 1, numSamples);
-        //auto block44k = resampler.processIn(block);
-
         waveNet.process(buffer.getArrayOfReadPointers(), buffer.getArrayOfWritePointers(),
             buffer.getNumSamples());
         
-
-        // resample back to original sample rate
-        //resampler.processOut(block48k, block);
-
         // Master Volume 
         // Apply ramped changes for gain smoothing
         if (masterValue == previousMasterValue)
