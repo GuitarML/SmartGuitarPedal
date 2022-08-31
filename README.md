@@ -45,7 +45,7 @@ The binaries will be located in `SmartPedal/build/SmartPedal_artefacts/`
 
 ### Loading hardware models
 Use the Load Model button to select a folder containing SmartPedal json models. Note that models for NeuralPi and SmartAmpPro use
-a different model architecture and will not be compatible. Only WaveNet models trained using PedalNetRT are compatible with SmartPedal.
+a different model architecture and will not be compatible. Only WaveNet models trained using PedalNetRT are compatible with SmartPedal and SmartAmp.
 
 ## License
 This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
