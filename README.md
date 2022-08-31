@@ -1,5 +1,7 @@
 # SmartGuitarPedal
 
+[![Downloads](https://img.shields.io/github/downloads/GuitarML/SmartGuitarPedal/total)](https://somsubhra.github.io/github-release-stats/?username=GuitarML&repository=SmartGuitarPedal&page=1&per_page=30) [![CI](https://github.com/GuitarML/SmartGuitarPedal/actions/workflows/cmake.yml/badge.svg)](https://github.com/GuitarML/SmartGuitarPedal/actions/workflows/cmake.yml)
+
 Guitar plugin made with JUCE that uses neural network models to emulate real world hardware.
 
 See video demo on [YouTube](https://www.youtube.com/watch?v=8GAr6qQAlxY), along with a sound comparison [video](https://youtu.be/xEOFz3UcDyA) between
