@@ -157,10 +157,10 @@ void SmartPedalAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
         // Apply ramped changes for gain smoothing
         if (driveValue == previousDriveValue)
         {
-            buffer.applyGain(driveValue);
+            buffer.applyGain(driveValue*2.0);
         }
         else {
-            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue, driveValue);
+            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 2.0, driveValue * 2.0);
             previousDriveValue = driveValue;
         }
 
