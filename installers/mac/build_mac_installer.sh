@@ -1,6 +1,6 @@
 #!/bin/bash
 
-script_file=TS-M1N3.pkgproj
+script_file=SmartPedal.pkgproj
 
 app_version=$(cut -f 2 -d '=' <<< "$(grep 'CMAKE_PROJECT_VERSION:STATIC' ../../build/CMakeCache.txt)")
 echo "Setting app version: $app_version..."
@@ -24,15 +24,15 @@ rm LICENSE.txt
 # sign the installer package
 echo "Signing installer package..."
 TEAM_ID=$(more ~/Developer/mac_id)
-pkg_dir=TS-M1N3_Installer_Packaged
+pkg_dir=SmartPedal_Installer_Packaged
 rm -Rf $pkg_dir
 mkdir $pkg_dir
-productsign -s "$TEAM_ID" ../../build/TS-M1N3.pkg $pkg_dir/TS-M1N3-signed.pkg
+productsign -s "$TEAM_ID" ../../build/SmartPedal.pkg $pkg_dir/SmartPedal-signed.pkg
 
 echo "Notarizing installer package..."
 INSTALLER_PASS=$(more ~/Developer/mac_installer_pass)
-npx notarize-cli --file $pkg_dir/TS-M1N3-signed.pkg --bundle-id com.GuitarML.TS-M1N3 --asc-provider "$TEAM_ID" --username smartguitarml@gmail.com --password "$INSTALLER_PASS"
+npx notarize-cli --file $pkg_dir/SmartPedal-signed.pkg --bundle-id com.GuitarML.SmartPedal --asc-provider "$TEAM_ID" --username smartguitarml@gmail.com --password "$INSTALLER_PASS"
 
 echo "Building disk image..."
-vol_name=Install_TS-M1N3-$app_version
+vol_name=Install_SmartPedal-$app_version
 hdiutil create "$vol_name.dmg" -fs HFS+ -srcfolder $pkg_dir -format UDZO -volname "$vol_name"

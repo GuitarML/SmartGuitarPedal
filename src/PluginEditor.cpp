@@ -123,7 +123,7 @@ void SmartPedalAudioProcessorEditor::resized()
     loadButton.setBounds(184, 68, 120, 20);
     modelSelect.setBounds(50, 36, 400, 25);
     modelLabel.setBounds(193, 12, 90, 25);
-    versionLabel.setBounds(470, 635, 60, 10);
+    versionLabel.setBounds(465, 635, 60, 10);
 
     // Overdrive Widgets
     odDriveKnob.setBounds(112, 115, 125, 145);
