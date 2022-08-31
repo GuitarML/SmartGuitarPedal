@@ -68,22 +68,16 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     addAndMakeVisible(odDriveKnob);
     odDriveKnob.setLookAndFeel(&blackHexKnobLAF);
     odDriveKnob.addListener(this);
-    //odDriveKnob.setRange(0.0, 1.0);
-    //odDriveKnob.setValue(processor.pedalDriveKnobState);
     odDriveKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odDriveKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    //odDriveKnob.setNumDecimalPlacesToDisplay(1);
     odDriveKnob.setDoubleClickReturnValue(true, 0.5);
 
     masterSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, MASTER_ID, odLevelKnob);
     addAndMakeVisible(odLevelKnob);
     odLevelKnob.setLookAndFeel(&blackHexKnobLAF);
     odLevelKnob.addListener(this);
-    //odLevelKnob.setRange(-23.0, 25.0);
-    //odLevelKnob.setValue(processor.pedalLevelKnobState);
     odLevelKnob.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     odLevelKnob.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, false, 50, 20);
-    //odLevelKnob.setNumDecimalPlacesToDisplay(1);
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
     addAndMakeVisible(versionLabel);
@@ -195,18 +189,13 @@ void SmartPedalAudioProcessorEditor::loadFromFolder()
     modelSelect.clear();
 
     if (files.size() > 0) {
-        //Array<File> files = chooser.getResults();
         for (auto file : files) {
             modelSelect.addItem(file.getFileNameWithoutExtension(), processor.jsonFiles.size() + 1);
             processor.jsonFiles.push_back(file);
             processor.num_models += 1;
         }
-        //modelSelect.setText(processor.saved_model.getFileNameWithoutExtension());
-        //processor.loadConfig(processor.saved_model);
         processor.loadConfig(processor.jsonFiles[processor.current_model_index]);
         modelSelect.setText(processor.jsonFiles[processor.current_model_index].getFileNameWithoutExtension(), juce::NotificationType::dontSendNotification);
-
-        //modelSelectChanged();
     }
 }
 
