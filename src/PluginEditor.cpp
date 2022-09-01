@@ -227,6 +227,7 @@ void SmartPedalAudioProcessorEditor::modelSelectChanged()
     const int selectedFileIndex = modelSelect.getSelectedItemIndex();
     if (selectedFileIndex >= 0 && selectedFileIndex < processor.jsonFiles.size()) {
         processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
+        processor.current_model_index = selectedFileIndex;
     }
 }
 

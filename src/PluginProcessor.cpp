@@ -224,7 +224,7 @@ void SmartPedalAudioProcessor::setStateInformation (const void* data, int sizeIn
         {
             treeState.replaceState (juce::ValueTree::fromXml (*xmlState));
             fw_state = xmlState->getBoolAttribute ("fw_state");
-            File saved_model = xmlState->getStringAttribute("saved_model");
+            saved_model = xmlState->getStringAttribute("saved_model");
             current_model_index = xmlState->getIntAttribute("current_model_index");
             File temp = xmlState->getStringAttribute("folder");
             folder = temp;
