@@ -26,7 +26,7 @@ endif()
 juce_add_plugin(SmartPedal
     COMPANY_NAME GuitarML
     PLUGIN_MANUFACTURER_CODE GtML
-    PLUGIN_CODE Npi3 
+    PLUGIN_CODE Sgp3 
     FORMATS ${JUCE_FORMATS}
     ProductName "SmartPedal"
     LV2_URI https://github.com/GuitarML/SmartPedal
