@@ -4,6 +4,8 @@
 
 Guitar plugin made with JUCE that uses neural network models to emulate real world hardware.
 
+Checkout the tutorial on [YouTube](https://youtu.be/HrNf6DNRUdU) for creating your own models for the SmartPedal.
+
 See video demo on [YouTube](https://www.youtube.com/watch?v=8GAr6qQAlxY), along with a sound comparison [video](https://youtu.be/xEOFz3UcDyA) between
 the TS9 Tubescreamer and a deep learning model using the SmartGuitarPedal.
 
