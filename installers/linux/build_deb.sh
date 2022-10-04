@@ -3,7 +3,7 @@
 
 # Set the app name and version here
 app_name=SmartPedal
-version=1.4
+version=1.5
 
 
 # 1. Create the package directory structure and control file

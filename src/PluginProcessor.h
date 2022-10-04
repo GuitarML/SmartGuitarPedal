@@ -78,7 +78,9 @@ public:
     File saved_model;
 
     AudioProcessorValueTreeState treeState;
-    
+
+    bool conditioned = false;
+
 
 private:
 

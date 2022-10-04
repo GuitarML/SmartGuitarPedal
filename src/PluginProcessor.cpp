@@ -153,15 +153,23 @@ void SmartPedalAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
     // Overdrive Pedal ================================================================== 
     if (fw_state == 1) {
         
-        // Master Volume 
-        // Apply ramped changes for gain smoothing
-        if (driveValue == previousDriveValue)
-        {
-            buffer.applyGain(driveValue*10.0);
-        }
-        else {
-            buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 10.0, driveValue * 10.0);
-            previousDriveValue = driveValue;
+        if (conditioned == false) {
+            // Apply ramped changes for gain smoothing
+            if (driveValue == previousDriveValue)
+            {
+                buffer.applyGain(driveValue*20.0);
+            }
+             else {
+                buffer.applyGainRamp(0, (int) buffer.getNumSamples(), previousDriveValue * 20.0, driveValue * 20.0);
+                previousDriveValue = driveValue;
+            }
+        } else {
+            buffer.applyGain(10.0); // Apply default boost to help sound
+            float* chanBuffer1 = buffer.getWritePointer(1);
+            for (int i = 0; i < buffer.getNumSamples(); i++)
+            {
+                chanBuffer1[i] = driveValue; 
+            }
         }
 
         waveNet.process(buffer.getArrayOfReadPointers(), buffer.getArrayOfWritePointers(),
@@ -244,6 +252,11 @@ void SmartPedalAudioProcessor::loadConfig(File configFile)
     WaveNetLoader loader(configFile);
     int numChannels = loader.numChannels;
     int inputChannels = loader.inputChannels;
+    if (inputChannels > 1) {
+        conditioned = true;
+    } else {
+        conditioned = false;
+    }
     int outputChannels = loader.outputChannels;
     int filterWidth = loader.filterWidth;
     std::vector<int> dilations = loader.dilations;

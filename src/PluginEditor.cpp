@@ -57,12 +57,12 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     addAndMakeVisible(odFootSw);
     odFootSw.addListener(this);
 
-    odLED.setImages(true, true, true,
-        ImageCache::getFromMemory(BinaryData::led_red_on_png, BinaryData::led_red_on_pngSize), 1.0, Colours::transparentWhite,
-        Image(), 1.0, Colours::transparentWhite,
-        ImageCache::getFromMemory(BinaryData::led_red_on_png, BinaryData::led_red_on_pngSize), 1.0, Colours::transparentWhite,
-        0.0);
-    addAndMakeVisible(odLED);
+    //odLED.setImages(true, true, true,
+    //    ImageCache::getFromMemory(BinaryData::led_red_on_png, BinaryData::led_red_on_pngSize), 1.0, Colours::transparentWhite,
+    //    Image(), 1.0, Colours::transparentWhite,
+    //    ImageCache::getFromMemory(BinaryData::led_red_on_png, BinaryData::led_red_on_pngSize), 1.0, Colours::transparentWhite,
+    //    0.0);
+    //addAndMakeVisible(odLED);
 
     driveSliderAttach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.treeState, GAIN_ID, odDriveKnob);
     addAndMakeVisible(odDriveKnob);
@@ -81,7 +81,7 @@ SmartPedalAudioProcessorEditor::SmartPedalAudioProcessorEditor (SmartPedalAudioP
     odLevelKnob.setDoubleClickReturnValue(true, 0.5);
 
     addAndMakeVisible(versionLabel);
-    versionLabel.setText("v1.4", juce::NotificationType::dontSendNotification);
+    versionLabel.setText("v1.5", juce::NotificationType::dontSendNotification);
     versionLabel.setJustificationType(juce::Justification::left);
     versionLabel.setColour(juce::Label::textColourId, juce::Colours::black);
     //auto font = versionLabel.getFont();
@@ -105,13 +105,25 @@ SmartPedalAudioProcessorEditor::~SmartPedalAudioProcessorEditor()
 void SmartPedalAudioProcessorEditor::paint (Graphics& g)
 {
     // Workaround for graphics on Windows builds (clipping code doesn't work correctly on Windows)
-    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-    g.drawImageAt(background, 0, 0);  // Debug Line: Redraw entire background image
-    #else
-    // Redraw only the clipped part of the background image
-    juce::Rectangle<int> ClipRect = g.getClipBounds(); 
-    g.drawImage(background, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
-    #endif
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    if (processor.fw_state == 0) {
+        g.drawImageAt(background_off, 0, 0);  // Debug Line: Redraw entire background image
+    } else if (processor.fw_state == 1 && processor.conditioned == true) {
+        g.drawImageAt(background_on_blue, 0, 0);  // Debug Line: Redraw entire background image
+    } else if (processor.fw_state == 1 && processor.conditioned == false) {
+        g.drawImageAt(background_on, 0, 0);  // Debug Line: Redraw entire background image
+    }
+#else
+// Redraw only the clipped part of the background image
+
+    juce::Rectangle<int> ClipRect = g.getClipBounds();
+    if (processor.fw_state == 0) {
+        g.drawImage(background_off, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+    } else if (processor.fw_state == 1 && processor.conditioned == true) {
+        g.drawImage(background_on_blue, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+    } else if (processor.fw_state == 1 && processor.conditioned == false)
+        g.drawImage(background_on, ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight(), ClipRect.getX(), ClipRect.getY(), ClipRect.getWidth(), ClipRect.getHeight());
+#endif
 }
 
 void SmartPedalAudioProcessorEditor::resized()
@@ -120,16 +132,15 @@ void SmartPedalAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     //Overall Widgets
-    loadButton.setBounds(184, 68, 120, 20);
-    modelSelect.setBounds(50, 36, 400, 25);
-    modelLabel.setBounds(193, 12, 90, 25);
-    versionLabel.setBounds(465, 635, 60, 10);
+    loadButton.setBounds(186, 56, 120, 20);
+    modelSelect.setBounds(52, 26, 400, 25);
+    modelLabel.setBounds(197, 2, 90, 25);
+    versionLabel.setBounds(462, 632, 60, 10);
 
     // Overdrive Widgets
-    odDriveKnob.setBounds(112, 115, 125, 145);
-    odLevelKnob.setBounds(283, 115, 125, 145);
-    odFootSw.setBounds(220, 459, 75, 105);
-    odLED.setBounds(239, 398, 75, 105);
+    odDriveKnob.setBounds(103, 97, 176, 176);
+    odLevelKnob.setBounds(268, 97, 176, 176);
+    odFootSw.setBounds(185, 416, 120, 110);
 }
 
 
@@ -229,21 +240,18 @@ void SmartPedalAudioProcessorEditor::modelSelectChanged()
         processor.loadConfig(processor.jsonFiles[selectedFileIndex]);
         processor.current_model_index = selectedFileIndex;
     }
+    repaint();
 }
 
 
 void SmartPedalAudioProcessorEditor::resetImages()
 {
+    repaint();
     if (processor.fw_state == 0) {
         odFootSw.setImages(true, true, true,
             ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::footswitch_up_png, BinaryData::footswitch_up_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-        odLED.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::led_red_off_png, BinaryData::led_red_off_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::led_red_off_png, BinaryData::led_red_off_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
     else {
@@ -251,11 +259,6 @@ void SmartPedalAudioProcessorEditor::resetImages()
             ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
             Image(), 1.0, Colours::transparentWhite,
             ImageCache::getFromMemory(BinaryData::footswitch_down_png, BinaryData::footswitch_down_pngSize), 1.0, Colours::transparentWhite,
-            0.0);
-       odLED.setImages(true, true, true,
-            ImageCache::getFromMemory(BinaryData::led_red_on_png, BinaryData::led_red_on_pngSize), 1.0, Colours::transparentWhite,
-            Image(), 1.0, Colours::transparentWhite,
-            ImageCache::getFromMemory(BinaryData::led_red_on_png, BinaryData::led_red_on_pngSize), 1.0, Colours::transparentWhite,
             0.0);
     }
 }
