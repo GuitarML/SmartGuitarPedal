@@ -166,9 +166,20 @@ void SmartPedalAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
         } else {
             buffer.applyGain(10.0); // Apply default boost to help sound
             float* chanBuffer1 = buffer.getWritePointer(1);
-            for (int i = 0; i < buffer.getNumSamples(); i++)
-            {
-                chanBuffer1[i] = driveValue; 
+
+            // Check for parameter changes for smoothing calculations
+            if (driveValue != previousDriveValue) {
+                steppedValue1 = (driveValue - previousDriveValue) / numSamples;
+                for (int i = 0; i < buffer.getNumSamples(); i++)
+                {
+                    chanBuffer1[i] = previousDriveValue + (i + 1) * steppedValue1;
+                }
+                previousDriveValue = driveValue;
+            } else {
+                for (int i = 0; i < buffer.getNumSamples(); i++)
+                {
+                    chanBuffer1[i] = driveValue;
+                }
             }
         }
 
