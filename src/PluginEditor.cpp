@@ -140,7 +140,7 @@ void SmartPedalAudioProcessorEditor::resized()
     // Overdrive Widgets
     odDriveKnob.setBounds(103, 97, 176, 176);
     odLevelKnob.setBounds(268, 97, 176, 176);
-    odFootSw.setBounds(185, 416, 120, 110);
+    odFootSw.setBounds(185, 416, 175, 160);
 }
 
 
