@@ -21,7 +21,7 @@ a microphone, or direct out from a load box. When running "Direct Out" models, y
 Impulse Response plugin to accurately model the amp speaker/cabinet. 
 
 You can create your own models and load them in SmartGuitarPedal using the [PedalNetRT](https://github.com/GuitarML/PedalNetRT) repository directly, or
-by using the Capture Utility files (available for download at [GuitarML.com](https://guitarml.com/) with Google Colab and following the [Video Tutorial](https://youtu.be/HrNf6DNRUdU).
+by using the Capture Utility files (available for download at [GuitarML.com](https://guitarml.com/)) with Google Colab and following the [Video Tutorial](https://youtu.be/HrNf6DNRUdU).
 
 Model training is done using PyTorch on pre recorded .wav samples. More info in the above repository. 
 To share your best models, email the json files to smartguitarml@gmail.com and they may be included 
