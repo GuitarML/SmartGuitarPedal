@@ -78,7 +78,9 @@ public:
     File saved_model;
 
     AudioProcessorValueTreeState treeState;
-    
+
+    bool conditioned = false;
+
 
 private:
 
@@ -87,6 +89,7 @@ private:
 
     float previousDriveValue = 0.5;
     float previousMasterValue = 0.5;
+    float steppedValue1 = 0.0;
 
     WaveNet waveNet;
 

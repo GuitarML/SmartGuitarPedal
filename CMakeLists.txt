@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment target")
-project(SmartPedal VERSION 1.4.0)
+project(SmartPedal VERSION 1.5.0)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -29,7 +29,7 @@ juce_add_plugin(SmartPedal
     PLUGIN_CODE Sgp3 
     FORMATS ${JUCE_FORMATS}
     ProductName "SmartPedal"
-    LV2_URI https://github.com/GuitarML/SmartPedal
+    LV2_URI https://github.com/GuitarML/SmartGuitarPedal
     ICON_BIG resources/logo.png
     MICROPHONE_PERMISSION_ENABLED TRUE
 )
