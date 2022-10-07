@@ -29,7 +29,7 @@ juce_add_plugin(SmartPedal
     PLUGIN_CODE Sgp3 
     FORMATS ${JUCE_FORMATS}
     ProductName "SmartPedal"
-    LV2_URI https://github.com/GuitarML/SmartGuitarPedal
+    LV2URI https://github.com/GuitarML/SmartGuitarPedal
     ICON_BIG resources/logo.png
     MICROPHONE_PERMISSION_ENABLED TRUE
 )
